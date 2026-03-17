@@ -13,6 +13,7 @@ plugins {
   id("jcstress.caffeine")
   id("revapi.caffeine")
   id("jmh.caffeine")
+  id("org.pastalab.fray.gradle") version "0.8.1-SNAPSHOT"
 }
 
 sourceSets {
@@ -404,6 +405,17 @@ testing.suites {
         doFirst { systemProperty("caffeine.osgi.jar", jarPath.get()) }
       }
     }
+  }
+}
+
+// Configure the Fray concurrency testing task (registered by the Fray Gradle plugin)
+afterEvaluate {
+  tasks.named<Test>("frayTest").configure {
+    // Override the javaLauncher set by testing.caffeine since Fray uses its own instrumented JDK
+    javaLauncher.unset()
+    // Include the codeGen classes on the classpath
+    classpath = files(sourceSets.named("test").map { it.runtimeClasspath },
+      sourceSets.named("codeGen").map { it.runtimeClasspath })
   }
 }
 
