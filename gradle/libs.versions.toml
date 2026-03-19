@@ -32,6 +32,7 @@ felix-scr = "2.2.14"
 findsecbugs = "1.14.0"
 flip-tables = "1.1.1"
 forbidden-apis = "3.10"
+fray = "0.8.2"
 google-java-format = "1.35.0"
 grpc = "1.79.0"
 guava = "33.5.0-jre"
@@ -231,6 +232,7 @@ dependency-analysis = { id = "com.autonomousapps.dependency-analysis", version.r
 dependency-check = { id = "org.owasp.dependencycheck", version.ref = "dependency-check" }
 errorprone = { id = "net.ltgt.errorprone", version.ref = "errorprone-plugin" }
 forbidden-apis = { id = "de.thetaphi.forbiddenapis", version.ref = "forbidden-apis" }
+fray = { id = "org.pastalab.fray.gradle", version.ref = "fray" }
 idea = { id = "org.jetbrains.gradle.plugin.idea-ext", version.ref = "idea" }
 jmh = { id = "me.champeau.jmh", version.ref = "jmh-plugin" }
 jmh-report = { id = "io.morethan.jmhreport", version.ref = "jmh-report" }

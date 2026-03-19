@@ -13,7 +13,7 @@ plugins {
   id("jcstress.caffeine")
   id("revapi.caffeine")
   id("jmh.caffeine")
-  id("org.pastalab.fray.gradle") version "0.8.1-SNAPSHOT"
+  alias(libs.plugins.fray)
 }
 
 sourceSets {
@@ -95,6 +95,10 @@ configurations.configureEach {
       force("${libs.eclipse.collections.testutils.get().module}:12.0.0")
     }
   }
+}
+
+fray {
+  testTask = "frayTest"
 }
 
 val compileCodeGenJava by tasks.existing(JavaCompile::class) {
@@ -272,6 +276,12 @@ testing.suites {
       }
     }
   }
+  register<JvmTestSuite>("frayTest") {
+    useJUnitJupiter(libs.versions.junit.jupiter)
+    dependencies {
+      implementation(project())
+    }
+  }
   register<JvmTestSuite>("googleTest") {
     useJUnitJupiter(libs.versions.junit.jupiter)
 
@@ -405,17 +415,6 @@ testing.suites {
         doFirst { systemProperty("caffeine.osgi.jar", jarPath.get()) }
       }
     }
-  }
-}
-
-// Configure the Fray concurrency testing task (registered by the Fray Gradle plugin)
-afterEvaluate {
-  tasks.named<Test>("frayTest").configure {
-    // Override the javaLauncher set by testing.caffeine since Fray uses its own instrumented JDK
-    javaLauncher.unset()
-    // Include the codeGen classes on the classpath
-    classpath = files(sourceSets.named("test").map { it.runtimeClasspath },
-      sourceSets.named("codeGen").map { it.runtimeClasspath })
   }
 }
 

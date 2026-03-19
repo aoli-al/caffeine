@@ -1,10 +1,6 @@
 @file:Suppress("UnstableApiUsage")
 pluginManagement {
   includeBuild("gradle/plugins")
-  repositories {
-    gradlePluginPortal()
-    mavenLocal()
-  }
 }
 plugins {
   id("com.gradle.develocity") version "4.3.2"
@@ -15,7 +11,6 @@ plugins {
 dependencyResolutionManagement {
   repositories {
     mavenCentral()
-    mavenLocal()
   }
 }
 
